@@ -683,14 +683,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flechaPrefab: {fileID: 5608498223048831932, guid: 7f86b98b7f5062649a0dee6987a75cc7, type: 3}
   flechasDatos:
-  - posicion: {x: 0, y: 0, z: 0}
+  - posicion: {x: 2, y: 0, z: -2}
+    eulerRotation: {x: 0, y: -90, z: 0}
+  - posicion: {x: 1.5, y: -150, z: -2}
     eulerRotation: {x: 0, y: 0, z: 0}
-  - posicion: {x: 1, y: -1, z: 0}
+  - posicion: {x: -1.5, y: -150, z: -2}
+    eulerRotation: {x: 0, y: 0, z: 0}
+  - posicion: {x: -4.5, y: -150, z: -2}
+    eulerRotation: {x: 0, y: 0, z: 0}
+  - posicion: {x: -7.5, y: -120, z: -2}
     eulerRotation: {x: 0, y: 90, z: 0}
-  - posicion: {x: 1, y: -1, z: 1}
-    eulerRotation: {x: 0, y: 0, z: 0}
-  - posicion: {x: 0, y: -1, z: 1}
-    eulerRotation: {x: 0, y: 0, z: 0}
+  - posicion: {x: -7.5, y: 0, z: -2}
+    eulerRotation: {x: 0, y: 90, z: 0}
+  - posicion: {x: -7.5, y: 120, z: -2}
+    eulerRotation: {x: 0, y: 90, z: 0}
+  - posicion: {x: -7, y: 240, z: -2}
+    eulerRotation: {x: 0, y: 180, z: 0}
+  - posicion: {x: -4, y: 240, z: -2}
+    eulerRotation: {x: 0, y: -90, z: 0}
+  - posicion: {x: -4, y: 120, z: -2}
+    eulerRotation: {x: 0, y: 180, z: 0}
+  - posicion: {x: 0, y: 120, z: -2}
+    eulerRotation: {x: 0, y: -90, z: 0}
 --- !u!4 &1204208971
 Transform:
   m_ObjectHideFlags: 0

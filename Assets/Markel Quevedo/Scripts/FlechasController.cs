@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 public class FlechasController : MonoBehaviour
 {
     [System.Serializable]
-    public struct FlechaData
+    public class FlechaData
     {
-        public Vector3 posicion;         // Posición relativa al patrón
-        public Vector3 eulerRotation;    // Rotación fija, independiente de la imagen
+        public Vector3 posicion;        // Posición relativa a la imagen
+        public Vector3 eulerRotation;   // Rotación local personalizada (por flecha)
     }
 
     public GameObject flechaPrefab;
-    public List<FlechaData> flechasDatos; // Configurable en el inspector
+    public List<FlechaData> flechasDatos = new List<FlechaData>();
 
     private List<GameObject> flechasInstanciadas = new List<GameObject>();
     private ARTrackedImageManager imageManager;
@@ -39,22 +39,30 @@ public class FlechasController : MonoBehaviour
 
     void InstanciarFlechas(Transform imagenTransform)
     {
-        flechasInstanciadas.Clear(); // Por si acaso
+        flechasInstanciadas.Clear();
+
         for (int i = 0; i < flechasDatos.Count; i++)
         {
-            Vector3 posicionMundo = imagenTransform.position + flechasDatos[i].posicion;
-            Quaternion rotacionMundo = Quaternion.Euler(flechasDatos[i].eulerRotation);
+            // Posición relativa al patrón
+            Vector3 posicionMundo = imagenTransform.TransformPoint(flechasDatos[i].posicion);
+
+            // Rotaciones combinadas:
+            Quaternion rotacionBase = Quaternion.Euler(-90, 0, 0); // Tumbada
+            Quaternion rotacionPersonal = Quaternion.Euler(flechasDatos[i].eulerRotation); // Personalizada por flecha
+            Quaternion rotacionMundo = imagenTransform.rotation * rotacionBase * rotacionPersonal;
 
             GameObject flecha = Instantiate(flechaPrefab, posicionMundo, rotacionMundo);
-            flecha.SetActive(i == 0); // Solo la primera visible
+            flecha.SetActive(i == 0); // Solo la primera está activa
 
-            FlechaTrigger trigger = flecha.GetComponent<FlechaTrigger>();
+            // Configura el trigger
+            var trigger = flecha.GetComponent<FlechaTrigger>();
             trigger.Index = i;
             trigger.Manager = this;
 
             flechasInstanciadas.Add(flecha);
         }
     }
+
     public void ActivarSiguienteFlecha(int index)
     {
         if (index + 1 < flechasInstanciadas.Count)
